@@ -168,7 +168,7 @@ function size(list){
     count++;
     sizePointer = sizePointer.next;
   }
-  console.log(`The Size of the list you me is ${count} nodes.`);
+  // console.log(`The Size of the list you me is ${count} nodes.`);
   return count;
 }
 
@@ -198,6 +198,7 @@ function findPrevious(list, key){
   console.log(`The previous of ${key} is ${prevNode.value}`);
   return prevNode.value;
 }
+
 function findLast(list){
   if (isEmpty(list)){
     console.log('Thats an empty list!');
@@ -259,51 +260,89 @@ function main(){
   display(SLL);
   findLast(SLL);
 }
-//WHAT THE MYSTERY FUCNION DOES IS IT REMOVES ALL DUPLICATES.
+//WHAT THE MYSTERY FUCNION DOES IS IT REMOVES ALL DUPLICATES FROM THE LIST !
 //====================AFTERNOON WORK====================
+
 function reverseMain(){
   let SLL = new LinkedList();
-  // console.log('initial insert');
   SLL.insertLast('Apollo');
   SLL.insertLast('Boomer');
   SLL.insertLast('Helo');
   SLL.insertLast('Husker');
   SLL.insertLast('Starbuck');
-  // console.log('before reverse');
-  // display(SLL);
+
+  console.log('before the reverse');
   display(SLL);
-  console.log('>>=========================entered rec list');
   reverseList(SLL);
-  console.log('<<=========================exited rec list');
+  console.log('after the reverse');
   display(SLL);
-
-
-// null => nodeA => nodeB => null
-//null <= nodeA <= nodeB
-
-// nodeA => nodeB => nodeC
-
 }
 
-
+//recursive solution
 function reverseList(list, oldHead = null){
   //base case
-  if(list.head.next === null){
-    console.log('base case!');
-    list.head.next = oldHead;
-    return list.head;
+  if(list.head.next === null){ //no // no // yes
+    list.head.next = oldHead; // b > a > null
+    return list.head; // c > b > a > null
   }
-  let prevHead = list.head;
-  list.head = list.head.next;
-  prevHead.next = oldHead;
-  return reverseList(list,prevHead);
+  let prevHead = list.head; // a > b > c // b > c > null
+  list.head = list.head.next; // b > c // c > null
+  prevHead.next = oldHead; // a > null // b > a > null
+  return reverseList(list,prevHead); // list: b > c oldHead: a > null // list: c > null oldHead: b > a > null //
+}
+
+function thirdFromTheEnd(list){
+  if(size(list)<=2){
+    return console.log('theres not enough to there to be third last');
+  }
+  let lastPointer = list.head.next;
+  let secondLastPointer = list.head;
+  let thirdLastPointer = null;
+  while(lastPointer.next !== null){
+    thirdLastPointer = secondLastPointer;
+    secondLastPointer = lastPointer;
+    lastPointer = lastPointer.next;
+  }
+  return thirdLastPointer.value;
+}
+
+function thirdMain(){
+  let SLL = new LinkedList();
+  SLL.insertLast('Apollo');
+  SLL.insertLast('Boomer');
+  SLL.insertLast('Helo');
+  SLL.insertLast('Husker');
+  SLL.insertLast('Starbuck');
+  console.log(thirdFromTheEnd(SLL));
+}
+function middle(list){
+  let halfPointer = list.head;
+  let leadingPointer = list.head;
+  if(size(list)%2===0){
+    while(leadingPointer.next.next !== null){
+      console.log('the half is ',halfPointer.value);
+      halfPointer = halfPointer.next;
+      leadingPointer = leadingPointer.next.next;
+    }
+    return halfPointer.value;
+  }
+  while(leadingPointer.next !== null){
+    halfPointer = halfPointer.next;
+    leadingPointer = leadingPointer.next.next;
+  }
+  return halfPointer.value;
 
 }
-  //  Apollo => Boomer=> Helo=> Husker=> Starbuck
-  //  Boomer => Helo=> Husker=> Starbuck
-  //  Helo => Husker => Starbuck
-  //  Husker => Starbuck
-  //  Starbuck
+function middleMain(){
+  let SSLL = new LinkedList;
+  for(let i =1; i<=101; i++){
+    SSLL.insertLast(i);
+  }
+  console.log(middle(SSLL));
+}
+
 
 // main();
-reverseMain();
+// reverseMain();
+// thirdMain();
+// middleMain();
