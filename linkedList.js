@@ -197,7 +197,6 @@ function findPrevious(list, key){
   }
   console.log(`The previous of ${key} is ${prevNode.value}`);
   return prevNode.value;
-}
 
 function findLast(list){
   if (isEmpty(list)){
